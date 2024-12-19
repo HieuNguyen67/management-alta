@@ -1,0 +1,13 @@
+/* Custom màu header table */
+.ant-table-thead > tr > th {
+  background-color: rgba(252, 226, 211, 1) !important; /* Màu nền bạn chọn */
+  color: rgba(242, 110, 33, 1) !important; /* Màu chữ */
+  font-weight: bold;
+  text-align: center;
+}
+/* Căn giữa pagination */
+.ant-table-pagination {
+  display: flex;
+  justify-content: center;
+}
+        
