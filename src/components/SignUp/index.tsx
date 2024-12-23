@@ -12,6 +12,7 @@ const RegisterForm: React.FC = () => {
   const navigate = useNavigate();
 
   const handleRegister = async (values: {
+    name: string;
     email: string;
     password: string;
     role: string;
@@ -19,7 +20,7 @@ const RegisterForm: React.FC = () => {
     setLoading(true);
 
     try {
-      const { email, password, role } = values;
+      const { name, email, password, role } = values;
 
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -29,12 +30,13 @@ const RegisterForm: React.FC = () => {
       const uid = userCredential.user.uid;
 
       await setDoc(doc(db, "users", uid), {
+        name,
         email,
         role,
       });
 
       message.success("Đăng ký thành công! Vui lòng đăng nhập.");
-      navigate("/"); 
+      navigate("/");
     } catch (error) {
       console.error("Lỗi khi đăng ký:", error);
       message.error("Đăng ký thất bại. Vui lòng kiểm tra lại thông tin.");
@@ -53,9 +55,17 @@ const RegisterForm: React.FC = () => {
       <h3>Đăng ký tài khoản</h3>
 
       <Form.Item
+        label="Họ và Tên"
+        name="name"
+        rules={[{ required: true, message: "Vui lòng nhập họ và tên!" }]}
+      >
+        <Input placeholder="Nhập họ và tên của bạn" />
+      </Form.Item>
+
+      <Form.Item
         label="Role"
         name="role"
-        initialValue="customer"
+        initialValue="student"
         rules={[{ required: true, message: "Vui lòng chọn role!" }]}
       >
         <Select>
@@ -87,7 +97,17 @@ const RegisterForm: React.FC = () => {
       </Form.Item>
 
       <Form.Item>
-        <Button  htmlType="submit" block loading={loading}  style={{ width: "100%", background: "rgb(255, 90, 0)" ,color:'white', fontWeight: "bold"}}>
+        <Button
+          htmlType="submit"
+          block
+          loading={loading}
+          style={{
+            width: "100%",
+            background: "rgb(255, 90, 0)",
+            color: "white",
+            fontWeight: "bold",
+          }}
+        >
           {loading ? "Đang xử lý..." : "Đăng ký"}
         </Button>
       </Form.Item>

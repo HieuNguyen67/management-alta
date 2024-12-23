@@ -12,6 +12,7 @@ import { MdOutlinePersonSearch } from "react-icons/md";
 import "./header.css";
 import { IoIosLogOut } from "react-icons/io";
 import { FaRegUser } from "react-icons/fa6";
+import { FaBook } from "react-icons/fa";
 
 const Navbar: React.FC = () => {
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
@@ -19,6 +20,7 @@ const Navbar: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const user = useSelector((state: RootState) => state.auth);
+
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
   );
@@ -50,6 +52,26 @@ const Navbar: React.FC = () => {
       ),
     },
   ];
+  const menuItemsStudent = [
+    {
+      key: "/student-test",
+      label: "Thi trắc nghiệm",
+      icon: (
+        <MdOutlinePersonSearch
+          style={{ fontSize: "25px", position: "relative", top: "5px" }}
+        />
+      ),
+    },
+    {
+      key: "/learning-process",
+      label: "Tiến trình học tập",
+      icon: (
+        <FaBook
+          style={{ fontSize: "25px", position: "relative", top: "5px" }}
+        />
+      ),
+    },
+  ];
 
   const renderMenu = () => (
     <>
@@ -75,11 +97,35 @@ const Navbar: React.FC = () => {
             </>
           ) : null}
         </>
-      ) : userRole === "student" ? (<></>) 
-        : userRole === "admin" ?(<></>) :  (
+      ) : userRole === "student" ? (
+        <>
+          {isAuthenticated && user ? (
+            <>
+              <div style={{ justifyContent: "center", flex: 1 }}>
+                {menuItemsStudent.map((item) => (
+                  <span style={{ margin: "0 10px" }} key={item.key}>
+                    <NavLink
+                      to={item.key}
+                      style={({ isActive }) => ({
+                        color: isActive ? "rgb(255, 90, 0)" : "black",
+                        fontWeight: isActive ? "bold" : "bold",
+                      })}
+                    >
+                      {item.icon} {item.label}
+                    </NavLink>
+                  </span>
+                ))}
+              </div>
+            </>
+          ) : null}
+        </>
+      ) : userRole === "admin" ? (
+        <></>
+      ) : (
         <>
           <p className="title-head">
-            HỆ THỐNG TUYỂN DỤNG<span className="title-head-2"> VÀ QUẢN LÝ SINH VIÊN THỰC TẬP</span>
+            HỆ THỐNG TUYỂN DỤNG
+            <span className="title-head-2"> VÀ QUẢN LÝ SINH VIÊN THỰC TẬP</span>
           </p>
         </>
       )}
@@ -116,7 +162,7 @@ const Navbar: React.FC = () => {
               <span>
                 {" "}<FaRegUser style={{ fontSize: "15px" }}/>
               </span>
-              &nbsp; <strong>{user.email}</strong>!
+              &nbsp; <strong>{user.name}</strong>!
             </p>
           </div>
 

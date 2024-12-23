@@ -35,7 +35,7 @@ const LoginForm: React.FC = () => {
           navigate("/business-dashboard");
           break;
         case "student":
-          navigate("/student-dashboard");
+          navigate("/student-test");
           break;
         default:
           break;
@@ -59,7 +59,7 @@ const LoginForm: React.FC = () => {
         const userData = userDoc.data();
         if (userData.role === role) {
           dispatch(
-            loginSuccess({ email: userData.email, role: userData.role })
+            loginSuccess({ id: uid ,email: userData.email, role: userData.role, name: userData.name })
           );
 
           switch (role) {
@@ -70,7 +70,7 @@ const LoginForm: React.FC = () => {
               navigate("/business-dashboard");
               break;
             case "student":
-              navigate("/student-dashboard");
+              navigate("/student-test");
               break;
             default:
               message.error("Role không xác định!");
