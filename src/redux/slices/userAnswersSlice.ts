@@ -1,6 +1,15 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { collection, addDoc, doc, getDoc } from "firebase/firestore";
+import { collection, addDoc, getDoc, doc } from "firebase/firestore";
 import { db } from "@/firebaseConfig";
+
+const fetchQuestion = async (questionId: string) => {
+  const questionRef = doc(db, "questions", questionId);
+  const questionSnap = await getDoc(questionRef);
+  if (!questionSnap.exists()) {
+    throw new Error(`Question with ID ${questionId} does not exist.`);
+  }
+  return questionSnap.data();
+};
 
 export const submitAnswers = createAsyncThunk(
   "userAnswers/submitAnswers",
@@ -11,17 +20,46 @@ export const submitAnswers = createAsyncThunk(
   }: {
     userId: string;
     examId: string;
-    answers: any[];
+    answers: { questionId: string; selectedOption: string }[];
   }) => {
     let score = 0;
-    answers.forEach((answer) => {
-      if (answer.isCorrect) score += answer.marks;
-    });
+    const validatedAnswers: any[] = [];
+
+    for (const answer of answers) {
+      const { questionId, selectedOption } = answer;
+      const questionData: any = await fetchQuestion(questionId);
+
+      let isCorrect = false;
+      if (questionData.type === "multiple-choice") {
+        const option = questionData.options.find(
+          (opt: any) => opt.id === selectedOption
+        );
+        if (option && option.isCorrect) {
+          isCorrect = true;
+          score += questionData.marks;
+        }
+      } else if (questionData.type === "fill-in-the-blank") {
+        if (
+          selectedOption.trim().toLowerCase() ===
+          questionData.correctAnswer.trim().toLowerCase()
+        ) {
+          isCorrect = true;
+          score += questionData.marks;
+        }
+      }
+
+      validatedAnswers.push({
+        questionId,
+        selectedOption,
+        isCorrect,
+        marks: isCorrect ? questionData.marks : 0,
+      });
+    }
 
     const docRef = await addDoc(collection(db, "userAnswers"), {
       userId,
       examId,
-      answers,
+      answers: validatedAnswers,
       score,
       submittedAt: new Date().toISOString(),
     });
@@ -47,7 +85,7 @@ const userAnswersSlice = createSlice({
       .addCase(submitAnswers.fulfilled, (state, action) => {
         state.loading = false;
         state.score = action.payload.score;
-        state.userAnswerId = action.payload.userAnswerId; 
+        state.userAnswerId = action.payload.userAnswerId;
       })
       .addCase(submitAnswers.rejected, (state) => {
         state.loading = false;
