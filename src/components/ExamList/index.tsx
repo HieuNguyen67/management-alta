@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hook/hook";
 import { fetchExams } from "@/redux/slices/examsSlice";
 import { Select, Button, Spin, Typography, Row, Col } from "antd";
 import { IoMdAdd } from "react-icons/io";
-
+import "./examList.css"
 const { Title } = Typography;
 
 const ExamList = ({
@@ -44,15 +44,15 @@ const ExamList = ({
     );
 
   return (
-    <div>
+    <div className="box">
       <Row justify={"center"}>
         <Col lg={10} xs={24}>
           {" "}
           <Select
-            style={{ width: "80%" }}
             placeholder="Chọn môn thi"
             value={selectedExam}
             onChange={setSelectedExam}
+            className="select-exam"
           >
             {exams.map((exam) => (
               <Select.Option key={exam.id} value={exam.id}>
@@ -64,6 +64,7 @@ const ExamList = ({
             style={{ background: "rgb(255, 90, 0)", color: "white", marginTop: "10px" }}
             onClick={handleSubmit}
             disabled={!selectedExam}
+            className="button-exam"
           >
             <IoMdAdd style={{}} /> Tạo đề thi
           </Button>

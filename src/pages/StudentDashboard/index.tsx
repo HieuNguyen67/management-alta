@@ -60,7 +60,7 @@ const StudentDashboard: React.FC = () => {
       ) : (
         <></>
       )}
-      <div style={{ margin: "50px 50px" }}>
+      <div >
         {!selectedExam ? (
           <ExamList onSelectExam={handleSelectExam} />
         ) : (

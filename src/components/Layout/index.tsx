@@ -11,14 +11,18 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     <>
       <Row>
         <Col span={24}>
-          <Navbar/>
+          <Navbar />
         </Col>
       </Row>
       <Row>
-        <Col span={24} style={{ background: "#f0f2f5" }} className="container">{children}</Col>
+        <Col span={24} style={{ background: "#f0f2f5" }} className="container">
+          {children}
+        </Col>
       </Row>
       <Row>
-        <Col span={24}><Footer/></Col>
+        <Col span={24}>
+          <Footer />
+        </Col>
       </Row>
     </>
   );

@@ -1,7 +1,6 @@
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import React, { useEffect } from "react";
-
 import { useNavigate } from "react-router-dom";
 import FormLearningProcess from "@/components/FormLearningProcess";
 
@@ -20,13 +19,13 @@ const LearningProcess: React.FC = () => {
   }, [isAuthenticated, navigate]);
   return (
     <>
-      <div style={{ margin: "50px 50px" }}>
+      <div>
         {isAuthenticated && user ? (
           <>
             <h1
               style={{
-                margin: "30px 20px",
-
+                margin: "30px auto",
+                textAlign: "center",
                 color: "rgb(255, 90, 0)",
                 fontWeight: "bold",
               }}
@@ -37,7 +36,7 @@ const LearningProcess: React.FC = () => {
         ) : (
           <></>
         )}
-        <FormLearningProcess/>  
+        <FormLearningProcess />
       </div>
     </>
   );

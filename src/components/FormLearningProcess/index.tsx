@@ -14,7 +14,7 @@ import {
 import { RiSendPlaneFill } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-
+import "./learningProcess.css"
 const FormLearningProcess: React.FC = () => {
   const [form] = Form.useForm();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -73,7 +73,7 @@ const FormLearningProcess: React.FC = () => {
                   message: "Vui lòng Chọn lớp / Chọn nhóm thực tập",
                 },
               ]}
-              style={{ margin: "16px", width: "50%" }}
+              className="input"
             >
               <Select placeholder="Chọn lớp / Chọn nhóm thực tập">
                 <Select.Option value="Internship_Frontend_11/2024">
@@ -93,7 +93,7 @@ const FormLearningProcess: React.FC = () => {
               label="Link file"
               name="linkFile"
               rules={[{ required: true, message: "Vui lòng nhập Link file" }]}
-              style={{ margin: "16px", width: "50%" }}
+              className="input"
             >
               <Input placeholder="Nhập Link file" />
             </Form.Item>
@@ -105,7 +105,7 @@ const FormLearningProcess: React.FC = () => {
               rules={[
                 { required: true, message: "Vui lòng nhập Nội dung báo cáo" },
               ]}
-              style={{ margin: "16px", width: "50%" }}
+              className="input"
             >
               <Input.TextArea placeholder="Nhập Nội dung báo cáo" />
             </Form.Item>

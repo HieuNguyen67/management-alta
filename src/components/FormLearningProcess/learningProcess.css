@@ -1,0 +1,12 @@
+
+  .input{
+        margin: 16px;
+    }
+@media (min-width: 768px) {
+    
+    .input{
+        margin: 16px;
+        width: 50%;
+    }
+}
+

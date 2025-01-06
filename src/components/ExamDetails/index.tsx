@@ -144,7 +144,7 @@ const ExamDetails = ({
   );
 
   return (
-    <div>
+    <div style={{ padding: "20px" }}>
       <h3>Đề thi môn</h3>
       <Title level={2} style={{ fontWeight: "bold" }}>
         {examTitle}

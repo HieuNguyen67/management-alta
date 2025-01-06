@@ -240,6 +240,30 @@ const Navbar: React.FC = () => {
                 </>
               ) : null}
             </>
+          ) : userRole === "student" ? (
+            <>
+              {" "}
+              <Menu
+                mode="vertical"
+                selectedKeys={[location.pathname]}
+                theme="light"
+              >
+                {menuItemsStudent.map((item) => (
+                  <Menu.Item key={item.key}>
+                    <NavLink
+                      to={item.key}
+                      style={({ isActive }) => ({
+                        color: isActive ? "rgb(255, 90, 0)" : "black",
+                        fontWeight: isActive ? "bold" : "bold",
+                      })}
+                      onClick={toggleDrawer}
+                    >
+                      {item.label}
+                    </NavLink>
+                  </Menu.Item>
+                ))}
+              </Menu>
+            </>
           ) : (
             <></>
           )}

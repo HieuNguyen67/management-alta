@@ -1,0 +1,23 @@
+
+     .box {
+       margin: 50px 20px;
+    }
+   .select-exam{
+         width: 100%;
+    }
+    .button-exam{
+       width: 100%; 
+    }
+@media (min-width: 768px) {
+    
+    .box {
+       margin: 50px 50px;
+    }
+    .select-exam{
+        width: 80%;
+    }
+       .button-exam{
+       width: auto; 
+    }
+}
+
